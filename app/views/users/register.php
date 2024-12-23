@@ -8,5 +8,6 @@
 </head>
 <body>
     <h3 class="text-gray-400 text-center">Hello test tailwind</h3>
+    <h2>Test push code </h2>
 </body>
 </html>
