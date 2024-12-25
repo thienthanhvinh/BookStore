@@ -7,7 +7,15 @@ module.exports = {
   ],
   
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        formBackground: '#F3F3F7',
+        mainColor: '#FA9A41',
+      },
+      fontFamily: {
+        sans: ['Lato', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }
