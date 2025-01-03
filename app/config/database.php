@@ -13,7 +13,8 @@ function connectDatabase()
 
     $conn = mysqli_connect($host, $user, $pass, $dbName);
     if ($conn) {
-        echo "Connect succesfully";
+        // echo "Connect succesfully";
+        return $conn;
     } else {
         die("Connect failed:" . mysqli_connect_error());
     }

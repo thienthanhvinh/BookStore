@@ -2,9 +2,16 @@
 return [
     'user' => [
         'login' => 'loginUser',
-        'register' => 'registerUser'
+        'register' => 'registerUser',
+        'forgot' => 'forgotPassword',
+        'checkEmailAjax' => 'checkEmailAjax',
+        'checkFirstNameAjax' => 'checkFirstNameAjax',
+        'checkLastNameAjax' => 'checkLastNameAjax',
+        'checkPasswordAjax' => 'checkPasswordAjax',
+    ],
+    'email' => [
+        'sendEmail' => 'sendEmail'
     ],
 ];
-
 
 ?>

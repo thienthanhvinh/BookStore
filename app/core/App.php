@@ -6,26 +6,24 @@ function handleRequest()
 
     $controllerName = $_GET['controller'] ?? 'user';
     // echo $controllerName;
-    $actionName = $_GET['action'] ?? 'login';
+    $actionName = $_GET['action'] ?? 'register';
     // echo $actionName;
     $id = $_GET['id'] ?? null;
 
+    // echo "Full URL: " . $_SERVER['REQUEST_URI'];
+
 
     if (isset($routes[$controllerName][$actionName])) {
-        print_r($routes[$controllerName][$actionName]);
         $controllerFile = __DIR__ . "/../controllers/" . ucfirst($controllerName) . "Controller.php";
         $actionFunction = $routes[$controllerName][$actionName];
 
         if (file_exists($controllerFile)) {
             require_once $controllerFile;
-            echo $controllerFile;
-
             if (function_exists($actionFunction)) {
                 if ($id) {
                     $actionFunction($id);
                 } else {
                     $actionFunction();
-                    echo $actionFunction;
                 }
                 return;
             };
