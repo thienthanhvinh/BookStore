@@ -162,6 +162,7 @@ class UserController
             }
 
             $emailUser = findEmailUser($email);
+
             if ($emailUser) {
                 $to = $emailUser;
                 $subject = 'Test Email';
@@ -176,11 +177,9 @@ class UserController
                     echo $result; // Hiển thị lỗi nếu có
                 }
             } else {
-                // echo "Email not exists";
-                return true;
+                echo "Email not exists";
             }
         };
-
 
 
         include __DIR__ . "/../views/users/forgot.php";

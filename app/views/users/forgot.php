@@ -1,6 +1,8 @@
 <?php
+
 $config = include __DIR__ . '/../../config/config.php';
 $base_url = $config['app']['base_url'];
+
 ?>
 
 <!DOCTYPE html>

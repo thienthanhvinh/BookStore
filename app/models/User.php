@@ -5,7 +5,6 @@ global $conn;
 $conn = connectDatabase();
 
 
-
 function userRegister($firstName, $lastName, $email, $password)
 {
     global $conn;
@@ -14,6 +13,7 @@ function userRegister($firstName, $lastName, $email, $password)
     if ($result) {
         return $result;
     } else {
+
         echo "Error: " . mysqli_error($conn);
     }
 }
@@ -27,9 +27,12 @@ function userLogin($email, $password)
         $lengthUser = mysqli_num_rows($result);
         return $lengthUser;
     } else {
+
         echo "Error: " . mysqli_error($conn);
     }
 }
+
+
 
 function checkEmail($email)
 {
@@ -40,6 +43,7 @@ function checkEmail($email)
         $countEmail = mysqli_fetch_assoc($result);
         return $countEmail;
     } else {
+
         echo "Error: " . mysqli_error($conn);
     }
 }

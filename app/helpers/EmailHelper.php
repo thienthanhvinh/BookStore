@@ -5,11 +5,10 @@ namespace App\Helpers;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
 class EmailHelper {
     public static function sendEmail($to, $subject, $body, $altBody = '') {
         require '../vendor/autoload.php';
-
+        
         $mail = new PHPMailer(true);
 
         try {

@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Core;
+
 use App\Controllers\UserController;
 
 class App
@@ -8,13 +10,12 @@ class App
     {
         $routes = include(__DIR__ . '/../config/routes.php');
 
+
         $controllerName = $_GET['controller'] ?? 'user';
-        // echo $controllerName;
         $actionName = $_GET['action'] ?? 'register';
-        // echo $actionName;
+
         $id = $_GET['id'] ?? null;
 
-        // echo "Full URL: " . $_SERVER['REQUEST_URI'];
 
 
         if (isset($routes[$controllerName][$actionName])) {
@@ -29,30 +30,24 @@ class App
 
                 if (class_exists($controllerFullClass)) {
                     $controller = new $controllerFullClass();
-                    if(method_exists($controller,  $actionFunction)) {
-
-                    }  
+                    if (method_exists($controller,  $actionFunction)) {
+                    }
                     if ($id) {
-                        $controller -> $actionFunction($id);
+                        $controller->$actionFunction($id);
                     } else {
-                        $controller -> $actionFunction();
+                        $controller->$actionFunction();
                     }
                     return;
+                } else {
+                    echo "Action $actionName not found!";
+                }
             } else {
-                echo "Action $actionName not found!";
+                echo "Controller class $controllerFullClass not found!";
             }
         } else {
-            echo "Controller class $controllerFullClass not found!";
+            echo "Controller file $controllerFile not found!";
         }
-    } else {
-        echo "Controller file $controllerFile not found!";
+
+        echo "404 Not Found";
     }
-
-    echo "404 Not Found";
-
 }
-
-}
-
-
-?>
