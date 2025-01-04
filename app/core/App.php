@@ -1,38 +1,58 @@
 <?php
+namespace App\Core;
+use App\Controllers\UserController;
 
-function handleRequest()
+class App
 {
-    $routes = include(__DIR__ . '/../config/routes.php');
+    public function handleRequest()
+    {
+        $routes = include(__DIR__ . '/../config/routes.php');
 
-    $controllerName = $_GET['controller'] ?? 'user';
-    // echo $controllerName;
-    $actionName = $_GET['action'] ?? 'login';
-    // echo $actionName;
-    $id = $_GET['id'] ?? null;
+        $controllerName = $_GET['controller'] ?? 'user';
+        // echo $controllerName;
+        $actionName = $_GET['action'] ?? 'register';
+        // echo $actionName;
+        $id = $_GET['id'] ?? null;
+
+        // echo "Full URL: " . $_SERVER['REQUEST_URI'];
 
 
-    if (isset($routes[$controllerName][$actionName])) {
-        print_r($routes[$controllerName][$actionName]);
-        $controllerFile = __DIR__ . "/../controllers/" . ucfirst($controllerName) . "Controller.php";
-        $actionFunction = $routes[$controllerName][$actionName];
+        if (isset($routes[$controllerName][$actionName])) {
+            $controllerClass = ucfirst($controllerName) . "Controller";
+            $controllerFile = __DIR__ . '/../controllers/' . $controllerClass . '.php';
+            $actionFunction = $routes[$controllerName][$actionName];
 
-        if (file_exists($controllerFile)) {
-            require_once $controllerFile;
-            echo $controllerFile;
+            if (file_exists($controllerFile)) {
+                require_once $controllerFile;
 
-            if (function_exists($actionFunction)) {
-                if ($id) {
-                    $actionFunction($id);
-                } else {
-                    $actionFunction();
-                    echo $actionFunction;
-                }
-                return;
-            };
+                $controllerFullClass = "App\\Controllers\\" . $controllerClass;
+
+                if (class_exists($controllerFullClass)) {
+                    $controller = new $controllerFullClass();
+                    if(method_exists($controller,  $actionFunction)) {
+
+                    }  
+                    if ($id) {
+                        $controller -> $actionFunction($id);
+                    } else {
+                        $controller -> $actionFunction();
+                    }
+                    return;
+            } else {
+                echo "Action $actionName not found!";
+            }
         } else {
-            echo "Not found controller";
+            echo "Controller class $controllerFullClass not found!";
         }
+    } else {
+        echo "Controller file $controllerFile not found!";
     }
 
     echo "404 Not Found";
+
 }
+
+}
+
+
+?>
