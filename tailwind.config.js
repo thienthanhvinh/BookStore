@@ -16,10 +16,17 @@ module.exports = {
       colors: {
         formBackground: '#F3F3F7',
         mainColor: '#FA9A41',
+        productName: '#353b48',
+        productRating: '#ffc107',
+        productAuthor: '#7f8c8d',
+        mainProduct: '#F3F3F7',
       },
       fontFamily: {
         sans: ['Lato', 'sans-serif'],
       },
+      boxShadow: {
+        'mainShadow': '2px 2px 3px #cbced1, 5px 5px 8px 5px #F3F3F7',
+      }
     },
   },
   plugins: [],

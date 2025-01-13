@@ -8,7 +8,7 @@ $conn = connectDatabase();
 function userRegister($firstName, $lastName, $email, $password)
 {
     global $conn;
-    $sql = "INSERT INTO users (firstName, lastName, email, password, address, phone, gender, role, createdAt, updatedAt, resetToken) VALUES ('$firstName', '$lastName', '$email', '$password', '', '', '', '', '', '', '')";
+    $sql = "INSERT INTO users (first_name, last_name, email, password, address, phone, gender, role, created_at, updated_at, reset_token) VALUES ('$firstName', '$lastName', '$email', '$password', '', '', '', '', '', '', '')";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         return $result;

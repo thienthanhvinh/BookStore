@@ -1,3 +1,33 @@
+
 body {
-    overflow: hidden;
+}
+
+#main-container {
+    padding: 25px 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner-section {
+    background-color: #F3F3F7;
+    margin-top: 20px;
+    margin-left: -100px;
+    margin-right: -100px;
+    width: calc(100% + 200px);
+}
+.benefits-section {
+    margin-top: 35px;
+}
+
+.function-section {
+    /* display: none; */
+}
+.BookContainerInfor:hover .function-section {
+    /* display: block; */
+}
+
+.subscribe-section {
+    margin-left: -100px;
+    margin-right: -100px;
+    width: calc(100% + 200px);
 }

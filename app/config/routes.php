@@ -9,9 +9,7 @@ return [
         'checkLastNameAjax' => 'checkLastNameAjax',
         'checkPasswordAjax' => 'checkPasswordAjax',
     ],
-    'email' => [
-        'sendEmail' => 'sendEmail'
-    ],
+    'home' => [
+        'index' => 'index'
+    ]
 ];
-
-?>

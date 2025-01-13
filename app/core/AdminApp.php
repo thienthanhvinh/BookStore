@@ -2,30 +2,30 @@
 
 namespace App\Core;
 
-class App
+
+class AdminApp
 {
     public function handleRequest()
     {
-        $routes = include(__DIR__ . '/../config/routes.php');
-
-
-        $controllerName = $_GET['controller'] ?? 'user';
-        $actionName = $_GET['action'] ?? 'register';
-
+        $routes = include(__DIR__ . '/../config/admin_routes.php');
+        $controllerName = $_GET['controller'] ?? 'dashboard';
+        $actionName = $_GET['action'] ?? 'index';
         $id = $_GET['id'] ?? null;
 
         if (isset($routes[$controllerName][$actionName])) {
             $controllerClass = ucfirst($controllerName) . "Controller";
-            $controllerFile = __DIR__ . '/../controllers/' . $controllerClass . '.php';
+            $controllerFile = __DIR__ . '/../controllers/Admin/' . $controllerClass . '.php';
             $actionFunction = $routes[$controllerName][$actionName];
-
             if (file_exists($controllerFile)) {
                 require_once $controllerFile;
 
-                $controllerFullClass = "App\\Controllers\\" . $controllerClass;
+                $controllerFullClass = "App\\Controllers\\Admin\\" . $controllerClass;
 
                 if (class_exists($controllerFullClass)) {
-                    $controller = new $controllerFullClass();
+                    require_once __DIR__ . '/../config/database.php';
+                    $conn = connectDatabase();
+                    $controller = new $controllerFullClass($conn);
+
                     if (method_exists($controller,  $actionFunction)) {
                     }
                     if ($id) {
@@ -35,18 +35,17 @@ class App
                     }
                     return;
                 } else {
-                    echo "Action $actionFunction not found!";
+                    echo "Controller FullClass $controllerFullClass not found!";
                 }
             } else {
-                echo "Controller class $controllerFullClass not found!";
+                echo "Controller File $controllerFile not found!";
                 return;
             }
         } else {
-            echo "Controller file $controllerFile not found!";
+            // echo "controller name or action name not found!";
             return;
         }
 
         echo "404 Not Found";
     }
 }
-
