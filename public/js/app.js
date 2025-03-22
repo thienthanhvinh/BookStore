@@ -94,5 +94,26 @@ $(document).ready(function () {
         })
     });
 
+    $('.add-cart').click(function (e) {
+        e.preventDefault();
+
+        var $form = $(this).closest(".form-submit");
+        var product_id = $form.find('.product_id').val();
+        console.log(product_id);
+
+        $.ajax({
+            url: "index.php?controller=cart&action=add",
+            method: "POST",
+            data: { product_id: product_id },
+            dataType: "text",
+            success: function (response) {
+                console.log("Response:", response);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("Lỗi:", xhr.status, thrownError);
+            }
+        });
+    });
+
 });
 

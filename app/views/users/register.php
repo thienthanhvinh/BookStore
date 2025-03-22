@@ -115,6 +115,8 @@ $base_url = $config['app']['base_url'];
                         <a href="index.php?controller=user&action=login" class="text-mainColor font-semibold hover:underline">Log in</a>
                     </div>
                 </form>
+                <button type="button" class="bg-green-400 text-white rounded-xl text-lg mt-3 add-cartt" data-id = "100">Add To Cart</button>
+
             </div>
             <div class="bg-formBackground shadow-md shadow-gray-300 w-[630px] rounded-xl px-[15px] py-[15px] h-[610px]">
                 <img src="<?php echo $base_url . '/images/sign-up.png' ?>" class="w-full h-full object-contain" alt="">

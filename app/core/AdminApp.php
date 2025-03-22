@@ -13,7 +13,7 @@ class AdminApp
         $id = $_GET['id'] ?? null;
 
         if (isset($routes[$controllerName][$actionName])) {
-            $controllerClass = ucfirst($controllerName) . "Controller";
+            $controllerClass = "Admin" . ucfirst($controllerName) . "Controller";
             $controllerFile = __DIR__ . '/../controllers/Admin/' . $controllerClass . '.php';
             $actionFunction = $routes[$controllerName][$actionName];
             if (file_exists($controllerFile)) {
@@ -42,7 +42,7 @@ class AdminApp
                 return;
             }
         } else {
-            // echo "controller name or action name not found!";
+            echo "Controller name or action name not exists";
             return;
         }
 

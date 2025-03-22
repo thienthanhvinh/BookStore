@@ -24,29 +24,34 @@ class App
 
                 $controllerFullClass = "App\\Controllers\\" . $controllerClass;
 
+
                 if (class_exists($controllerFullClass)) {
-                    $controller = new $controllerFullClass();
+                    require_once __DIR__ . '/../config/database.php';
+                    $conn = connectDatabase();
+                    $controller = new $controllerFullClass($conn);
+
                     if (method_exists($controller,  $actionFunction)) {
                     }
                     if ($id) {
+                        // echo "Calling action $actionFunction with ID: $id";
                         $controller->$actionFunction($id);
                     } else {
+                        // echo "Calling action $actionFunction without ID";
                         $controller->$actionFunction();
                     }
                     return;
                 } else {
-                    echo "Action $actionFunction not found!";
+                    echo "Controller FullClass $controllerFullClass not found!";
                 }
             } else {
-                echo "Controller class $controllerFullClass not found!";
+                echo "Controller File $controllerFile not found!";
                 return;
             }
         } else {
-            echo "Controller file $controllerFile not found!";
+            echo "Controller name or action name not exists";
             return;
         }
 
         echo "404 Not Found";
     }
 }
-

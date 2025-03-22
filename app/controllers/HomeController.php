@@ -51,7 +51,7 @@ class HomeController
             }
         }
         echo "<br>";
-        print_r($mostSoldProducts);
+        // print_r($mostSoldProducts);
         
         // $productIds = [7, 6, 5]; // Chuyển đổi mảng product_id thành một chuỗi để sử dụng trong câu lệnh SQL 
         // $productIdsString = implode(',', $productIds);

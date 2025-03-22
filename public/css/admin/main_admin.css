@@ -1,0 +1,10 @@
+.add-product-container label {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.active {
+    background-color: #FA9A41; /* Màu đỏ */
+    color: white;
+    border-radius: 4px;
+}

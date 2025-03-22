@@ -1,13 +1,13 @@
 <?php
-require_once  __DIR__ . "/../models/Product.php";
+// require_once  __DIR__ . "/../models/Product.php";
 
 global $conn;
 $conn = connectDatabase();
 
-function getProductsSold($currentTime, $timeMinus7Days)
+function getProductsSold($currentTime, $timeMinus14Days)
 {
     global $conn;
-    $sql = "SELECT * FROM products_sold WHERE buy_at BETWEEN '{$timeMinus7Days}' AND '{$currentTime}'";
+    $sql = "SELECT * FROM products_sold WHERE buy_at BETWEEN '{$timeMinus14Days}' AND '{$currentTime}'";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         $resultContent = [];
@@ -71,4 +71,27 @@ function getNewProduct($timeMinus3days, $currentTime)
     }
 }
 
+function getDetailProductById($id) {
+    global $conn;
+    $sql = "SELECT * FROM products WHERE product_id = '{$id}'";
+    $result = mysqli_query($conn, $sql);
+    if(mysqli_num_rows($result) > 0) {
+        $detailProduct = mysqli_fetch_assoc($result);
+        return $detailProduct;
+    } 
+}
 
+function getRelatedProducts($categoryId) {
+    global $conn;
+    $sql = "SELECT product_name, product_author, product_image, price, discount_price FROM products WHERE category_id = '{$categoryId}' LIMIT 4";
+    $result = mysqli_query($conn, $sql);
+    if(mysqli_num_rows($result) > 0) {
+        $resultProducts = [];
+        while($row = mysqli_fetch_assoc($result)) {
+            $resultProducts[] = $row;
+        }
+        return $resultProducts;
+    }else {
+        echo "Error:" . mysqli_error($conn);
+    }
+}

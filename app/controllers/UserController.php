@@ -91,6 +91,7 @@ class UserController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $lastName = $_POST['lastName'] ?? '';
+            echo $lastName;
             $response = [];
 
             if (empty($lastName)) {
@@ -141,7 +142,7 @@ class UserController
             $checkLogin = userLogin($email, $password);
             if ($checkLogin > 0) {
                 $_SESSION['email'] = $email;
-                $_SESSIon['is_login'] = true;
+                $_SESSION['is_login'] = true;
                 $message['successfully'] = "Login Successfully";
                 header('Location:index.php?controller=user&action=forgot');
             } else {
@@ -183,5 +184,20 @@ class UserController
 
 
         include __DIR__ . "/../views/users/forgot.php";
+    }
+
+    public function checkAjax()
+    {
+        // if(isset($_GET['id'])) {
+        //     $id = $_GET['id'];
+        //     echo $id;
+        // }else {
+        //     echo "Something went wrong";
+        // }
+
+        $id = $_GET['id'] ?? 'Ok';
+        echo $id;
+
+        include __DIR__ . '/../views/users/register.php';
     }
 }
