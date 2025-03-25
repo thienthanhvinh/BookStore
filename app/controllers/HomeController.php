@@ -2,126 +2,99 @@
 
 namespace App\Controllers;
 
+use App\Models\Product;
+use App\Helpers\Utils;
+
 require __DIR__ . "/../models/Product.php";
+require __DIR__ . "/../helpers/utils.php";
 
 class HomeController
 {
+    protected $conn;
+
+    public function __construct($conn)
+    {
+        $this->conn = $conn;
+
+        if (!$this->conn) {
+            die("Error: Database connection failed!");
+        }
+    }
+
     public function index()
     {
 
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $currentTime = date('Y-m-d H:i:s');
-        // echo "Current time is: " . $currentTime;
+        // Use Product Model
+        $product = new Product($this->conn);
 
-        $timeMinus14Days = date('Y-m-d H:i:s', strtotime('-14 days'));
-        // echo "Current time minus 7days is: " . $timeMinus7Days;
+        // Use Get Time In Ultis
+        $getTime = new Utils();
 
-        $soldProduct = getProductsSold($currentTime, $timeMinus14Days);
+        // Get Current Time And Get Time 14 Days Before
+        $currentTime = $getTime->getCurrentTime();
+        $timeMinus14Days = $getTime->getTimeByDays($days = '- 120 days');
 
-        // foreach ($soldProduct as $product) {
-        //     $productArray = [];
-        //     $productArray[] = $product['product_id'];
-        //     $productArray[] = $product['sold'];
-        // }
-        // print_r($productArray);
-        // print_r($soldProduct);
-
+        // Get Sold Products 14 Days Lasted
+        $soldProduct = $product->getProductsSold($currentTime, $timeMinus14Days);
         $productSales = [];
-
-        foreach($soldProduct as $product) {
-            $product_id = $product['product_id'];
-            if(!isset($productSales[$product_id])) {
+        foreach ($soldProduct as $soldItem) {
+            $product_id = $soldItem['product_id'];
+            if (!isset($productSales[$product_id])) {
                 $productSales[$product_id] = 0;
             }
-            $productSales[$product_id] += $product['sold'];
+            $productSales[$product_id] += $soldItem['sold'];
         }
-
         // Sap xep san pham theo tong so luong ban ra tu lon den be
         arsort($productSales);
-        // print_r($productSales);
-
-        //Lay nhung san pham co so luong mua nhieu nhat
+        //Lay nhung san pham co so luong mua nhieu nhat (Get Products have most count)
         $mostSoldProducts = [];
         $maxSold = max($productSales);
         $minSold = min($productSales);
-        foreach($productSales as $product_id => $totalSold) {
-            if($minSold < $totalSold && $totalSold <= $maxSold) {
-                $mostSoldProducts [] = $product_id;
-                // $mostSoldProducts[] = ['product_id' => $product_id];
+        foreach ($productSales as $product_id => $totalSold) {
+            if ($minSold < $totalSold && $totalSold <= $maxSold) {
+                $mostSoldProducts[] = $product_id;
             }
         }
-        echo "<br>";
-        // print_r($mostSoldProducts);
-        
-        // $productIds = [7, 6, 5]; // Chuyển đổi mảng product_id thành một chuỗi để sử dụng trong câu lệnh SQL 
-        // $productIdsString = implode(',', $productIds);
-
         $mostSoldProductsString = implode(',', $mostSoldProducts);
-        // echo $mostSoldProductsString;
 
-        $trendingProducts = getTrendingProducts($mostSoldProductsString);
-        
-
+        // Final Result 
+        $trendingProducts = $product->getTrendingProducts($mostSoldProductsString);
 
         // Deal of this week
-        $timeMinus7Days = date('Y-m-d H:i:s', strtotime('-7 days'));
-        // echo "Current time minus 7days is: " . $timeMinus7Days;
-
-        $soldProductThisWeek = getProductsSold($currentTime, $timeMinus7Days);
-
+        $timeMinus7Days = $getTime->getTimeByDays($days = '- 90 days');
+        $soldProductThisWeek = $product->getProductsSold($currentTime, $timeMinus7Days);
         $productThisWeek = [];
-
-        foreach($soldProductThisWeek as $product) {
-            $product_id = $product['product_id'];
-            if(!isset($productThisWeek[$product_id])) {
+        foreach ($soldProductThisWeek as $soldItem) {
+            $product_id = $soldItem['product_id'];
+            if (!isset($productThisWeek[$product_id])) {
                 $productThisWeek[$product_id] = 0;
             }
-            $productThisWeek[$product_id] += $product['sold'];
+            $productThisWeek[$product_id] += $soldItem['sold'];
         }
-
-        // Sap xep san pham theo tong so luong ban ra tu lon den be
         arsort($productThisWeek);
-        // print_r($productThisWeek);
-
-        //Lay nhung san pham co so luong mua nhieu nhat
+        // Get Products have most count
         $mostProductsThisWeek = [];
         $maxSold = max($productThisWeek);
         $minSold = min($productThisWeek);
-        foreach($productThisWeek as $product_id => $totalSold) {
-            if($minSold < $totalSold && $totalSold <= $maxSold) {
-                $mostProductsThisWeek [] = $product_id;
-                // $mostSoldProducts[] = ['product_id' => $product_id];
+        foreach ($productThisWeek as $product_id => $totalSold) {
+            if ($minSold < $totalSold && $totalSold <= $maxSold) {
+                $mostProductsThisWeek[] = $product_id;
             }
         }
-        echo "<br>";
-        // print_r($mostProductsThisWeek);
-        
-        // $productIds = [7, 6, 5]; // Chuyển đổi mảng product_id thành một chuỗi để sử dụng trong câu lệnh SQL 
-        // $productIdsString = implode(',', $productIds);
-
         $mostProductsThisWeekString = implode(',', $mostProductsThisWeek);
-        // echo $mostProductsThisWeekString;
 
-        $dealOfWeek = getDealOfWeek($mostProductsThisWeekString);
-
-
-        //New Arrivals
-        $timeMinus3days = date('Y-m-d H:i:s', strtotime('-3 days'));
-
-        $newProduct = getNewProduct($timeMinus3days, $currentTime);
+        // Final Result Deal of This Week
+        $dealOfWeek = $product->getDealOfWeek($mostProductsThisWeekString);
 
 
-        // foreach($newProduct as $product) {
-        //     $product_id = $product['product_id'];
-        //     $productIds[] = $product_id;
-        // }
-        // echo "<br>";
-        // print_r($productIds);
 
-        // $productIdsString = implode(',', $productIds);
-        // print_r($productIdsString);
+        // New Arrivals
+        $timeMinus3Days = $getTime->getTimeByDays($days = '- 80 days');
+        // Final Result New Product for New Arrivals
+        $timeMinus3Days = $getTime->getTimeByDays($days = '- 80 days');
+        $newProduct = $product->getNewProduct($timeMinus3Days, $currentTime);
 
-    
+
 
         include __DIR__ . "/../views/home/index.php";
     }

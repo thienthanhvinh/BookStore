@@ -3,8 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\Admin\Post;
-
-require __DIR__ . "/../../helpers/utils.php";
+use App\Helpers\Utils;
 
 require_once __DIR__ . "/../../config/database.php";
 
@@ -54,12 +53,13 @@ class AdminPostController
             if (!empty($postTitle && $postAuthor && $postDes &&  $postDetail && $postCategory && $postImage &&  $createdAt && $createdBy)) {
 
                 $post = new Post($this->conn);
+                $utils = new Utils();
 
                 if ($post->addPost($postTitle, $postAuthor, $postDes, $postDetail, $postImage, $postCategory, $createdAt, $createdBy)) {
-                    // echo "Insert succesfully";
-                    setFlashMessage('success', "Add Post Successfully!");
+                    
+                    $utils->setFlashMessage('success', "Add Post Successfully!");
                 } else {
-                    setFlashMessage('error', "Something went wrong!");
+                    $utils->setFlashMessage('error', "Something went wrong!");
                 }
             }
             

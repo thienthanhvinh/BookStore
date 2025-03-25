@@ -1,26 +1,30 @@
 <?php
-require_once __DIR__ . "/./Product.php";
 
+namespace App\Models;
 
-global $conn;
-$conn = connectDatabase();
+use App\Core\BaseModel;
+use App\Models\Product;
 
-function addCart($productId)
+class Cart extends BaseModel
 {
-    global $conn;
-    $inforProduct = getDetailProductById($productId);
-    // print_r($inforProduct);
+    
+    public function addCart($productId)
+    {
+        $product = new Product($this->conn);
+        $inforProduct = $product->getDetailProductById($productId);
+        // print_r($inforProduct);
 
-    $quantity = 1;
+        $quantity = 1;
 
-    $_SESSION['cart']['buy'][$productId] = array(
-        'product_id' => $inforProduct['product_id'],
-        'product_image' => $inforProduct['product_image'],
-        'product_name' => $inforProduct['product_name'],
-        'price' => $inforProduct['price'],
-        'quantity' => $quantity,
-        'total' => $quantity * $inforProduct['price'],
-    );
+        $_SESSION['cart']['buy'][$productId] = array(
+            'product_id' => $inforProduct['product_id'],
+            'product_image' => $inforProduct['product_image'],
+            'product_name' => $inforProduct['product_name'],
+            'price' => $inforProduct['price'],
+            'quantity' => $quantity,
+            'total' => $quantity * $inforProduct['price'],
+        );
 
-    print_r($_SESSION['cart']);
+        print_r($_SESSION['cart']);
+    }
 }

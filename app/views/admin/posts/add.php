@@ -1,7 +1,10 @@
 <?php
+use App\Helpers\Utils;
+
 $config = include __DIR__ . ('/../../../config/config.php');
 $base_url = $config['app']['base_url'];
-include __DIR__ . "/../../../helpers/utils.php";
+
+$utils = new Utils();
 
 ?>
 
@@ -22,7 +25,7 @@ include __DIR__ . "/../../../helpers/utils.php";
             <div class="add-product-container bg-[#fff] py-5 px-8 rounded-xl">
 
                 <!-- Display notification When Add Successfully -->
-                <?php if ($message = getFlashMessage('success')): ?>
+                <?php if ($message = $utils->getFlashMessage('success')): ?>
                     <div class="success bg-green-300 ml-auto text-green-600 w-[20%] text-lg rounded-lg py-2 text-center"><?php echo $message; ?></div>
                 <?php endif; ?>
 
@@ -116,3 +119,5 @@ include __DIR__ . "/../../../helpers/utils.php";
         }
     }, 5000);
 </script>
+
+

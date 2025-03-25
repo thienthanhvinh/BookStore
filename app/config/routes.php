@@ -15,15 +15,15 @@ return [
     ],
     'product' => [
         'detail' => 'detail',
-        'list' => 'list',
+        'index' => 'index',
     ],
     'cart' => [
         'add' => 'addToCart',
         'detail' => 'detail',
     ],
     'post' => [
-        'list' => 'list',
-        'detail' => 'detail'
+        'index' => 'index',
+        'show' => 'show'
     ],
     'page' => [
         'about' => 'about',

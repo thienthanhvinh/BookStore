@@ -1,5 +1,4 @@
 
-
 $(document).ready(function () {
     $('#email').on("input", function () {
         const email = $(this).val();

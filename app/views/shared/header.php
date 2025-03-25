@@ -27,9 +27,12 @@ $base_url = $config['app']['base_url'];
                     </a>
 
                 </div>
-                <div class="basis-[550px] relative flex items-center">
-                    <input type="text" class="px-7 py-3 outline-none border border-gray-300 rounded-3xl w-full inline-block" placeholder="Find the book you like...">
-                    <button type="submit" style="position: absolute; right:8px;">
+                <div class="basis-[550px] relative flex flex-col items-center">
+                    <input type="text" name="search" id="searchHeader" class="px-7 py-3 outline-none border border-gray-300 rounded-3xl w-full inline-block" placeholder="Find the book you like...">
+
+                    <div class="shadow-xl rounded-xl w-[95%] h-auto flex flex-col gap-4 px-3 py-3" id="searchHeaderResults"></div>
+
+                    <button type="submit" style="position: absolute; right:8px; top: 5px">
                         <svg width="40px" height="40px" style="background-color: #FA9A41; color: white; border-radius: 50px; padding: 5px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

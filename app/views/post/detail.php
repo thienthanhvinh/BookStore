@@ -2,93 +2,96 @@
 include __DIR__ . "/../../views/shared/header.php";
 ?>
 
-<div class="mt-14 flex gap-16">
-    <div class="basis-[65%]">
-        <h2 class="text-3xl mb-5">A Universe of Words: The Impact of Science Fiction on Popular Culture</h2>
-        <div class="flex items-center gap-4">
-            <p class="bg-orange-200 px-2 py-3 text-orange-400 w-[200px] rounded-3xl text-lg text-center">Business & Economics</p>
-            <div class="flex gap-2 text-lg">
-                <div class="flex gap-2">
-                    <p>Malisa John</p>
+<?php if (!empty($detailPost)) { ?>
+    <div class="mt-20 flex gap-16">
+        <div class="basis-[65%]">
+            <h2 class="text-3xl mb-5"><?php echo $detailPost['post_title'] ?></h2>
+            <div class="flex items-center gap-4">
+                <p class="bg-orange-200 px-2 py-3 text-orange-400 w-[200px] rounded-3xl text-lg text-center"><?php echo $detailPost['category_name'] ?></p>
+                <div class="flex gap-2 text-lg">
+                    <div class="flex gap-2">
+                        <p><?php echo $detailPost['post_author'] ?></p>
+                    </div>
+                    <div>|</div>
+                    <div class="flex gap-2">
+                        <p><?php echo $detailPost['created_at'] ?></p>
+                    </div>
                 </div>
-                <div>|</div>
+
+            </div>
+            <div class="mt-6" style="height: 550px">
+                <img class="w-full rounded-2xl object-cover h-full" src="<?php echo $base_url ?>uploads/images/<?php echo $detailPost['post_image'] ?>" alt="">
+            </div>
+            <p class="text-gray-500 text-xl mt-6 text-justify tracking-wider"><?php echo $detailPost['post_detail'] ?></p>
+        </div>
+
+        <div class="basis-[35%]">
+            <p class="mb-5 text-2xl">Search</p>
+            <div class="relative">
+                <input type="text" class="border border-gray-400 rounded-[30px] px-5 py-4 w-full" placeholder="Find the books...">
+                <button type="submit" class="absolute right-3 top-2">
+                    <svg width="40px" height="40px" style="background-color: #FA9A41; color: white; border-radius: 50px; padding: 5px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            <h2 class="border border-gray-200 mt-12"></h2>
+            <h2 class="text-2xl mt-8 mb-8">Categories</h2>
+            <div class="flex flex-col gap-5 mt-8">
                 <div class="flex gap-2">
-                    <p>08 Aug, 2023</p>
+                    <input type="checkbox">
+                    <p class="text-xl">Fiction</p>
+                </div>
+                <div class="flex gap-2">
+                    <input type="checkbox">
+                    <p class="text-xl">Non-Fiction</p>
+                </div>
+                <div class="flex gap-2">
+                    <input type="checkbox">
+                    <p class="text-xl">Romance</p>
+                </div>
+                <div class="flex gap-2">
+                    <input type="checkbox">
+                    <p class="text-xl">Biography</p>
                 </div>
             </div>
+            <h2 class="border border-gray-200 mt-12"></h2>
+            <h2 class="mt-10 text-2xl mb-5">Tags</h2>
+            <div class="flex items-center gap-3">
+                <p class="text-orange-400 bg-orange-200 px-6 py-2 rounded-3xl text-lg">Fiction</p>
+                <p class="text-green-400 bg-green-200 px-6 py-2 rounded-3xl text-lg">Philosophy</p>
+                <p class="text-blue-400 bg-blue-200 px-6 py-2 rounded-3xl text-lg">Mystery</p>
+            </div>
+            <h2 class="border border-gray-200 mt-12"></h2>
+
+            <?php if (!empty($recentArticle)) { ?>
+                <p class="mb-5 text-2xl mt-7">Recent Article</p>
+
+                <div class="flex flex-col gap-7">
+                    <?php foreach ($recentArticle as $item) { ?>
+                        <div class="flex gap-4 bg-gray-100 rounded-xl py-5 px-4">
+                            <div class="basis-[35%] h-[100px]">
+                                <img class="object-cover w-full h-full rounded-xl" src="<?php echo $base_url ?>uploads/images/<?php echo $item['post_image'] ?>" alt="">
+                            </div>
+                            <div class="basis-[65%]">
+                                <p class="text-lg line-clamp-3 mb-1"><?php echo $item['post_title'] ?></p>
+                                <a href="" class="text-orange-400 text-lg font-semibold">Read More</a>
+                            </div>
+                        </div>
+                    <?php  } ?>
+                </div>
+            <?php } else { ?>
+                <p class="mb-5 text-2xl mt-7">Not Found Recent Article</p>
+            <?php } ?>
 
         </div>
-        <div class="h-[400px] mt-6">
-            <img class="w-full rounded-2xl object-cover h-full" src="<?php echo $base_url ?>/images/detai_book.png" alt="">
-        </div>
-        <p class="text-gray-500 text-xl mt-6 text-justify">Lorem ipsum dolor sit amet consectetur. Arcu cras dictum malesuada tincidunt vulputate orci in turpis ante. Convallis non condimentum eget amet orci orci sit arcu. Ut nunc nam imperdiet gravida. Pulvinar congue vivamus pulvinar vel. Pulvinar diam mattis elit elementum eget fames. Viverra etiam volutpat congue. Lorem ipsum dolor sit amet consectetur. Arcu cras dictum malesuada tincidunt vulputate orci in turpis ante. Convallis non condimentum eget amet orci orci sit arcu. Ut nunc nam imperdiet gravida. Pulvinar congue vivamus pulvinar vel. Pulvinar diam mattis elit elementum eget fames. Viverra etiam volutpat congue.</p>
     </div>
 
-    <div class="basis-[35%]">
-        <p class="mb-5 text-2xl">Search</p>
-        <div class="relative">
-            <input type="text" class="border border-gray-400 rounded-[30px] px-5 py-4 w-full" placeholder="Find the books...">
-            <button type="submit" class="absolute right-3 top-2">
-                <svg width="40px" height="40px" style="background-color: #FA9A41; color: white; border-radius: 50px; padding: 5px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                        <path d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </g>
-                </svg>
-            </button>
-        </div>
-        <h2 class="border border-gray-200 mt-12"></h2>
-        <h2 class="text-2xl mt-8 mb-8">Categories</h2>
-        <div class="flex flex-col gap-5 mt-8">
-            <div class="flex gap-2">
-                <input type="checkbox">
-                <p class="text-xl">Fiction</p>
-            </div>
-            <div class="flex gap-2">
-                <input type="checkbox">
-                <p class="text-xl">Non-Fiction</p>
-            </div>
-            <div class="flex gap-2">
-                <input type="checkbox">
-                <p class="text-xl">Romance</p>
-            </div>
-            <div class="flex gap-2">
-                <input type="checkbox">
-                <p class="text-xl">Biography</p>
-            </div>
-        </div>
-        <h2 class="border border-gray-200 mt-12"></h2>
-        <h2 class="mt-10 text-2xl mb-5">Tags</h2>
-        <div class="flex items-center gap-3">
-            <p class="text-orange-400 bg-orange-200 px-6 py-2 rounded-3xl text-lg">Fiction</p>
-            <p class="text-green-400 bg-green-200 px-6 py-2 rounded-3xl text-lg">Philosophy</p>
-            <p class="text-blue-400 bg-blue-200 px-6 py-2 rounded-3xl text-lg">Mystery</p>
-        </div>
-        <h2 class="border border-gray-200 mt-12"></h2>
-        <p class="mb-5 text-2xl mt-7">Recent Article</p>
-        <div class="flex flex-col gap-8">
-            <div class="flex gap-4 bg-gray-100 rouned-xl py-4 px-4">
-                <div class="basis-[35%] h-[100px]">
-                    <img class="object-cover w-full h-full rounded-xl" src="<?php echo $base_url ?>/images/detai_book.png" alt="">
-                </div>
-                <div class="basis-[65%]">
-                    <p class="text-lg">Exploring Historical Fiction's Allure...</p>
-                    <a href="" class="text-orange-400 text-lg font-semibold">Read More</a>
-                </div>
-            </div>
-            <div class="flex gap-4 bg-gray-100 rouned-xl py-4 px-4">
-                <div class="basis-[35%] h-[100px]">
-                    <img class="object-cover w-full h-full rounded-xl" src="<?php echo $base_url ?>/images/detai_book.png" alt="">
-                </div>
-                <div class="basis-[65%]">
-                    <p class="text-lg">Exploring Historical Fiction's Allure...</p>
-                    <a href="" class="text-orange-400 text-lg font-semibold">Read More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<?php } ?>
 
 <div class="review-product mt-24 flex gap-14">
     <div class="basis-2/3">
