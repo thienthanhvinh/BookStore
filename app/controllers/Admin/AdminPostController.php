@@ -20,7 +20,7 @@ class AdminPostController
         }
     }
 
-    function store()
+    public function store()
     {
         // Title of page
         $title = "Add Post";
@@ -66,7 +66,12 @@ class AdminPostController
         }
 
 
-        include __DIR__ . '/../../views/admin/posts/add.php';
+        include __DIR__ . '/../../views/admin/posts/create.php';
+    }
+
+    public function index() {
+        $title = "Post List";
+        include __DIR__ . "/../../views/admin/posts/list.php";
     }
 
 

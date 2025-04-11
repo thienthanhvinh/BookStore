@@ -41,13 +41,13 @@ class Post extends BaseModel
     {
         $sql = "SELECT * FROM posts WHERE created_at BETWEEN '{$timeMinus10days}' AND '{$currentTime}' LIMIT 4";
         $result = mysqli_query($this->conn, $sql);
-        if(mysqli_num_rows($result) > 0) {
+        if (mysqli_num_rows($result) > 0) {
             $resultFinal = [];
-            while($row = mysqli_fetch_assoc($result)) {
+            while ($row = mysqli_fetch_assoc($result)) {
                 $resultFinal[] = $row;
             }
             return $resultFinal;
-        }else {
+        } else {
             echo "Not Found Query Available";
         }
     }

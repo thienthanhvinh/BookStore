@@ -279,16 +279,6 @@
             </div>
         </div>
 
-        <div class="subscribe-section mt-24 relative h-[330px]">
-            <img class="w-full h-full object-cover" src="<?php echo $base_url . 'images/newslatter.png' ?>" alt="">
-            <div class="absolute flex flex-col top-11 right-[50%] translate-x-1/2 text-center">
-                <h3 class="text-mainColor text-[55px]">10% Off Await!</h3>
-                <h3 class="text-[45px] tracking-wide font-semibold">Subscribe to our Newsletter.</h3>
-                <input type="text" class="bg-white rounded-[32px] px-6 py-4 w-[100%] outline-none" placeholder="Your Email">
-
-            </div>
-        </div>
-
         <?php include __DIR__ . "/../../views/shared/footer.php" ?>;
     </div>
 </body>

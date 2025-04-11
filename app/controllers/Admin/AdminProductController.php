@@ -20,6 +20,11 @@ class AdminProductController
         }
     }
 
+    public function index() {
+        $title = "Product List";
+        include __DIR__ . "/../../views/admin/products/list.php";
+    }
+
     public function store()
     {
         $categories = new Product($this->conn);
@@ -57,7 +62,7 @@ class AdminProductController
             }
         }
 
-        include __DIR__ . '/../../views/admin/products/add.php';
+        include __DIR__ . '/../../views/admin/products/store.php';
     }
 
     public function category()
@@ -85,6 +90,6 @@ class AdminProductController
             }
         }
 
-        include __DIR__ . "/../../views/admin/products/category.php";
+        include __DIR__ . "/../../views/admin/products/addCategory.php";
     }
 }

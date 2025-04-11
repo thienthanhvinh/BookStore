@@ -38,4 +38,9 @@ class CartController
 
         include __DIR__ . "/../views/cart/detail.php";
     }
+
+    public function payment() {
+        
+        include __DIR__ . "/../views/cart/payment.php";
+    }
 }

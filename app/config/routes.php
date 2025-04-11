@@ -16,10 +16,12 @@ return [
     'product' => [
         'detail' => 'detail',
         'index' => 'index',
+        'saveHtml' => 'saveHtml'
     ],
     'cart' => [
         'add' => 'addToCart',
         'detail' => 'detail',
+        'payment' => 'payment'
     ],
     'post' => [
         'index' => 'index',

@@ -39,7 +39,30 @@ class ProductController
                 echo json_encode($response);
                 exit;
             }
+        }
+        include __DIR__ . "/../views/products/list.php";
+    }
 
+    public function saveHtml($isAjax = true)
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $htmlContent = $_POST['html_content'] ?? '';
+
+            $response = ["status" => "success", "message" => "HTML saved successfully", 'data' => $htmlContent];
+
+            // if ($isAjax) {
+            //     echo json_encode($response);
+            //     exit;
+            // }
+
+            if ($isAjax) {
+                // header('Content-Type: application/json');
+                echo json_encode($response);
+                exit;
+            } else {
+                // Nếu không phải AJAX, gán HTML vào biến để View sử dụng
+                $htmlResult = $htmlContent;
+            }
         }
         include __DIR__ . "/../views/products/list.php";
     }

@@ -1,6 +1,6 @@
-
 /node_modules
 /vendor/
 composer.lock
-/public/css/tailwind.css
+.env
+# /public/css/tailwind.css
 

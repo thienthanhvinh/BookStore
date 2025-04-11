@@ -13,7 +13,7 @@ class Search
 
     public function search($table, $name, $keyword)
     {
-        $sql = "SELECT * FROM $table WHERE $name LIKE '%$keyword%' LIMIT 2";
+        $sql = "SELECT * FROM $table WHERE $name LIKE '%$keyword%' LIMIT 6";
         $result = $this->conn->query($sql);
         if ($result->num_rows > 0) {
             $searchResults = [];

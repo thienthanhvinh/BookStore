@@ -1,3 +1,13 @@
+<div class="subscribe-section mt-32 relative h-[330px]">
+    <img class="w-full h-full object-cover" src="<?php echo $base_url . 'images/newslatter.png' ?>" alt="">
+    <div class="absolute flex flex-col top-11 right-[50%] translate-x-1/2 text-center">
+        <h3 class="text-mainColor text-[55px]">10% Off Await!</h3>
+        <h3 class="text-[45px] tracking-wide font-semibold">Subscribe to our Newsletter.</h3>
+        <input type="text" class="bg-white rounded-[32px] px-6 py-4 w-[100%] outline-none" placeholder="Your Email">
+
+    </div>
+</div>
+
 <div class="footer mt-20 bg-white py-6">
     <div class="flex justify-around">
         <div class=" flex flex-col gap-3">
@@ -51,6 +61,7 @@
         <p class="text-center text-lg">©2024 Book Store All Rights Reserved.</p>
     </div>
 </div>
+
 <script src="<?php echo $base_url . 'js/app.js' ?>"></script>
 <script src="<?php echo $base_url . 'js/search.js' ?>"></script>
 </div>

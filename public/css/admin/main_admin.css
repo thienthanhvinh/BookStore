@@ -1,10 +1,35 @@
 .add-product-container label {
-    font-weight: bold;
-    font-size: 18px;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .active {
-    background-color: #FA9A41; /* Màu đỏ */
-    color: white;
-    border-radius: 4px;
+  background-color: #fa9a41;
+  color: white;
+  border-radius: 4px;
+  
+}
+
+.table-product, .table-post {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.table-product thead th, .table-post thead th {
+  color: #353b48;
+  padding: 20px 15px;
+  background-color: #ecf0f1;
+}
+
+.table-product tbody td, .table-post tbody td {
+  color: #747d8c;
+  padding: 15px 15px 20px 15px;
+  text-align: center;
+  border-bottom: 1px solid #dfe6e9;
+}
+
+.active-submenu {
+  background-color: #fa9a41;
+  color: white;
+  border-radius: 4px;
 }

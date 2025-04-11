@@ -1,10 +1,12 @@
 <?php
+
 use App\Helpers\Utils;
 
-$config = include __DIR__ . ('/../../../config/config.php');
+$utils = new Utils();
+
+$config = include __DIR__ . '/../../../config/config.php';
 $base_url = $config['app']['base_url'];
 
-$utils = new Utils();
 
 ?>
 
@@ -15,7 +17,6 @@ $utils = new Utils();
 
 
 <div class="flex">
-
     <!-- layout sidebar -->
     <?php include __DIR__ . '/../../shared/admin/admin_sidebar.php' ?>
 
@@ -29,10 +30,10 @@ $utils = new Utils();
                     <div class="success bg-green-300 ml-auto text-green-600 w-[20%] text-lg rounded-lg py-2 text-center"><?php echo $message; ?></div>
                 <?php endif; ?>
 
-                <h3 class="text-3xl font-semibold text-center">Add New Post</h3>
+                <h3 class="text-2xl font-semibold text-gray-600">Create Page</h3>
                 <div class="flex items-center gap-2 text-lg mt-5">
                     <a href="">Dashboard ></a>
-                    <a href="" class="text-blue-500">Posts</a>
+                    <a href="" class="text-blue-500">Create Page</a>
                 </div>
 
                 <div class="flex justify-center gap-12 bg-[#fff] mt-3">
@@ -42,16 +43,9 @@ $utils = new Utils();
                         <div class="flex flex-col gap-3">
                             <div class="flex flex-col gap-2">
                                 <label for="name">
-                                    Title
+                                    Name
                                 </label>
                                 <input type="text" name="postTitle" class="border border-gray-300 outline-none rounded-2xl px-5 py-2">
-                            </div>
-
-                            <div class="flex flex-col gap-2">
-                                <label for="name">
-                                    Author
-                                </label>
-                                <input type="text" name="postAuthor" class="border border-gray-300 outline-none rounded-2xl px-5 py-2">
                             </div>
 
                             <div class="flex flex-col gap-2">
@@ -60,6 +54,13 @@ $utils = new Utils();
                                 </label>
                                 <textarea name="postDes" class="border border-gray-300 outline-none rounded-2xl px-5 py-2 h-[150px]"></textarea>
                             </div>
+
+                            <div class="flex flex-col gap-2">
+                                <label for="name">
+                                    Intro Detail
+                                </label>
+                                <textarea name="postDes" class="border border-gray-300 outline-none rounded-2xl px-5 py-2 h-[260px]"></textarea>
+                            </div>
                         </div>
                     </div>
 
@@ -67,39 +68,19 @@ $utils = new Utils();
                         <div class="flex flex-col gap-3">
                             <div class="flex flex-col gap-2">
                                 <label for="name">
-                                    Detail
+                                    Mission Detail
                                 </label>
                                 <textarea name="postDetail" class="border border-gray-300 outline-none rounded-2xl px-5 py-2 h-[250px]"></textarea>
                             </div>
 
                             <div class="flex flex-col gap-2">
                                 <label for="name">
-                                    Image
+                                    Thumb
                                 </label>
                                 <input type="file" name="postImage" class="border border-gray-300 outline-none rounded-2xl px-5 py-2">
                             </div>
-
-                            <div class="flex flex-col gap-2">
-                                <label for="name">
-                                    Category
-                                </label>
-                                <?php if (!empty($postCategoriesOption)) { ?>
-                                    <select name="postCategory" id="" class="border border-gray-300 outline-none rounded-2xl px-4 py-2">
-
-                                        <?php foreach ($postCategoriesOption as $category) { ?>
-
-                                            <option value="<?php echo $category['category_id'] ?>"><?php echo $category['name'] ?></option>
-
-                                        <?php } ?>
-
-                                    </select>
-                                <?php } ?>
-                            </div>
-
                         </div>
-
                     </div>
-
                 </div>
                 <div class="flex justify-center mt-6">
                     <button class="bg-mainColor hover:bg-orange-400 duration-500 transition-all rounded-2xl px-5 py-3 text-center text-white text-lg mt-4c w-[90%]" type="submit" name="addPostButton">Add Post
@@ -119,5 +100,3 @@ $utils = new Utils();
         }
     }, 5000);
 </script>
-
-
