@@ -11,6 +11,8 @@ module.exports = {
     extend: {
       animation: {
         "fade-in": "fadeIn 0.5s ease-out forwards",
+        "spin-slow": "spin 1.3s linear infinite",
+        "spin-slower": "spin 1.5s linear infinite",
       },
       keyframes: {
         fadeIn: {
@@ -34,5 +36,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };

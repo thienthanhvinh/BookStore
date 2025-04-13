@@ -13,12 +13,20 @@ class HomeController
 {
     protected $conn;
     public $post;
+    public $product;
+    public $getTime;
 
     public function __construct($conn)
     {
         $this->conn = $conn;
 
         $this->post = new Post($this->conn);
+
+        // Use Product Model
+        $this->product = new Product($this->conn);
+
+        // Use Get Time In Ultis
+        $this->getTime = new Utils();
     }
 
     public function index()
@@ -85,6 +93,7 @@ class HomeController
 
         // Final Result Deal of This Week
         $dealOfWeek = $product->getDealOfWeek($mostProductsThisWeekString);
+        // $dealOfWeek = null;
 
 
 
@@ -99,5 +108,39 @@ class HomeController
 
 
         include __DIR__ . "/../views/home/index.php";
+    }
+
+    public function dealWeek()
+    {
+
+        // Get Current Time
+        $currentTime = $this->getTime->getCurrentTime();
+
+        $timeMinus7Days = $this->getTime->getTimeByDays($days = '- 90 days');
+        $soldProductThisWeek = $this->product->getProductsSold($currentTime, $timeMinus7Days);
+        $productThisWeek = [];
+        foreach ($soldProductThisWeek as $soldItem) {
+            $product_id = $soldItem['product_id'];
+            if (!isset($productThisWeek[$product_id])) {
+                $productThisWeek[$product_id] = 0;
+            }
+            $productThisWeek[$product_id] += $soldItem['sold'];
+        }
+        arsort($productThisWeek);
+        // Get Products have most count
+        $mostProductsThisWeek = [];
+        $maxSold = max($productThisWeek);
+        $minSold = min($productThisWeek);
+        foreach ($productThisWeek as $product_id => $totalSold) {
+            if ($minSold < $totalSold && $totalSold <= $maxSold) {
+                $mostProductsThisWeek[] = $product_id;
+            }
+        }
+        $mostProductsThisWeekString = implode(',', $mostProductsThisWeek);
+
+        // Final Result Deal of This Week
+        $dealOfWeek = $this->product->getDealOfWeek($mostProductsThisWeekString);
+
+        include __DIR__ . "/../views/components/deal-week.php";
     }
 }

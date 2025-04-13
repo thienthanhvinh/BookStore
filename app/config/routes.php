@@ -11,7 +11,8 @@ return [
         'checkAjax' => 'checkAjax'
     ],
     'home' => [
-        'index' => 'index'
+        'index' => 'index',
+        'dealWeek' => 'dealWeek'
     ],
     'product' => [
         'detail' => 'detail',
