@@ -19,13 +19,14 @@ $base_url = $config['app']['base_url'];
 
 <body>
 
-    <div id="loading-screen fixed ">
+    <div id="loading-screen" class="fixed bg-white flex justify-center items-center z-[9999] inset-0 transition-opacity duration-500">
         <div class="logo-loader">
-            <img src="<?php echo $base_url . 'images/brand-logo.png'; ?>" alt="Loading...">
+            <!-- <img src="<?php echo $base_url . 'images/brand-logo.png'; ?>" alt="Loading..." class="w-[150px] animate-pulse"> -->
+            <p class="uppercase text-2xl font-semibold text-[#0984e3] tracking-wider">Open First, then develop</p>
         </div>
     </div>
 
-    <div id="main-container" style="display: none;">
+    <div id="main-container">
         <div id="header">
             <div class="flex items-center justify-between flex-wrap">
                 <div class="">
@@ -80,6 +81,7 @@ $base_url = $config['app']['base_url'];
                     <a href="" class="text-lg">Register</a>
                 </div>
             </div>
+
             <div class="menu flex items-center gap-5 justify-center text-xl list-none mt-5">
                 <li class="hover:text-mainColor transition-all">
                     <a href="" class="flex items-center">

@@ -9,7 +9,7 @@ class Post extends BaseModel
 {
     public function getListPost()
     {
-        $sql = "SELECT * FROM posts";
+        $sql = "SELECT * FROM posts LIMIT 3";
         $result = mysqli_query($this->conn, $sql);
         if (mysqli_num_rows($result) > 0) {
             $listResult = [];

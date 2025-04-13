@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Product;
+use App\Models\Post;
 use App\Helpers\Utils;
 
 require __DIR__ . "/../models/Product.php";
@@ -11,14 +12,13 @@ require __DIR__ . "/../helpers/utils.php";
 class HomeController
 {
     protected $conn;
+    public $post;
 
     public function __construct($conn)
     {
         $this->conn = $conn;
 
-        if (!$this->conn) {
-            die("Error: Database connection failed!");
-        }
+        $this->post = new Post($this->conn);
     }
 
     public function index()
@@ -93,6 +93,8 @@ class HomeController
         // Final Result New Product for New Arrivals
         $timeMinus3Days = $getTime->getTimeByDays($days = '- 80 days');
         $newProduct = $product->getNewProduct($timeMinus3Days, $currentTime);
+
+        $listPost = $this->post->getListPost();
 
 
 
