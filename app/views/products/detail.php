@@ -1,4 +1,3 @@
-
 <?php include __DIR__ . "/../../views/shared/header.php"  ?>
 
 
@@ -17,10 +16,44 @@
             </div>
             <p class="text-gray-500 text-lg"><?php echo $detailProduct['product_detail'] ?></p>
             <div class="quantity w-[140px] h-[55px] px-3 py-1 rounded-3xl bg-gray-100 flex items-center justify-center gap-3">
-                <button type="" class="text-[50px]">-</button>
-                <input type="text" class="bg-gray-100 w-[40%] text-center outline-none text-2xl" value="1">
-                <button type="" class="text-3xl">+</button>
+                <button id="decrease" type="button" class="text-[50px]">-</button>
+                <input type="text" class="quantityInput bg-gray-100 w-[40%] text-center outline-none text-2xl" value="1">
+                <button id="increase" type="button" class="text-3xl">+</button>
             </div>
+
+            <script>
+                var quantity = 1;
+
+                function updateInput() {
+                    $('.quantityInput').val(quantity);
+                    console.log(quantity);
+                }
+
+                $('#increase').on('click', function() {
+                    quantity++;
+                    updateInput();
+                })
+
+                $('#decrease').on('click', function() {
+                    if (quantity > 1) {
+                        quantity--;
+                        updateInput();
+                    }
+                })
+
+                $('.quantityInput').on('input', function() {
+                    let val = parseInt($(this).val());
+                    if (!isNaN(val) && val >= 1) {
+                        quantity = val;
+                    } else {
+                        quantity = 1;
+                    }
+                    updateInput();
+                });
+
+                
+
+            </script>
 
             <div class="flex gap-3 items-center">
                 <a class="text-lg bg-mainColor px-6 py-2 text-white rounded-3xl" href="">Buy Now</a>

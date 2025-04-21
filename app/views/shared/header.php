@@ -17,11 +17,9 @@ $base_url = $config['app']['base_url'];
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body class="scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-200">
-
+<body>
     <div id="loading-screen" class="fixed bg-white flex justify-center items-center z-[9999] inset-0 transition-opacity duration-500">
         <div class="logo-loader flex justify-center items-center flex-col-reverse gap-6">
-            <!-- <img src="<?php echo $base_url . 'images/brand-logo.png'; ?>" alt="Loading..." class="w-[150px] animate-pulse"> -->
             <p class="uppercase text-2xl font-semibold text-[#0984e3] tracking-wider">Open First, then develop</p>
             <div class="loading-spin">
                 <svg class="animate-spin-slower" height="60px" width="60px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000">
@@ -53,7 +51,7 @@ $base_url = $config['app']['base_url'];
         <div id="header">
             <div class="flex items-center justify-between flex-wrap">
                 <div class="">
-                    <a href="" class="">
+                    <a href="index.php?controller=home&action=index" class="">
                         <img src="<?php echo $base_url . 'images/brand-logo.png'; ?>" alt="">
                     </a>
 
@@ -100,16 +98,74 @@ $base_url = $config['app']['base_url'];
                             </g>
                         </svg>
                     </a>
-                    <a href="" class="text-mainColor font-bold text-lg">Login</a>
-                    <a href="" class="text-lg">Register</a>
+
+
+                    <script>
+                        function toggleDropdown() {
+                            const dropdown = document.getElementById("dropdownContent");
+                            dropdown.classList.toggle("hidden");
+                        }
+
+                        // Đóng dropdown khi click ra ngoài
+                        document.addEventListener("click", function(e) {
+                            const dropdown = document.getElementById("dropdownContent");
+                            const trigger = e.target.closest("button");
+
+                            if (!trigger && !e.target.closest("#dropdownContent")) {
+                                dropdown.classList.add("hidden");
+                            }
+                        });
+                    </script>
+
+                    <?php if (isset($_SESSION['email'])) { ?>
+                        <div class="hidden">
+                            <a href="index.php?controller=user&action=login" class="text-mainColor font-bold text-lg cursor-pointer">Login</a>
+                            <a href="" class="text-lg">Register</a>
+                        </div>
+                        <!-- Wrapper -->
+                        <div class="relative inline-block text-left">
+                            <!-- SVG icon, dùng button để dễ quản lý accessibility -->
+                            <button onclick="toggleDropdown()" class="focus:outline-none">
+                                <svg width="30px" height="30px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <title>profile_round [#1342]</title>
+                                        <desc>Created with Sketch.</desc>
+                                        <defs> </defs>
+                                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g id="Dribbble-Light-Preview" transform="translate(-140.000000, -2159.000000)" fill="#000000">
+                                                <g id="icons" transform="translate(56.000000, 160.000000)">
+                                                    <path d="M100.562548,2016.99998 L87.4381713,2016.99998 C86.7317804,2016.99998 86.2101535,2016.30298 86.4765813,2015.66198 C87.7127655,2012.69798 90.6169306,2010.99998 93.9998492,2010.99998 C97.3837885,2010.99998 100.287954,2012.69798 101.524138,2015.66198 C101.790566,2016.30298 101.268939,2016.99998 100.562548,2016.99998 M89.9166645,2004.99998 C89.9166645,2002.79398 91.7489936,2000.99998 93.9998492,2000.99998 C96.2517256,2000.99998 98.0830339,2002.79398 98.0830339,2004.99998 C98.0830339,2007.20598 96.2517256,2008.99998 93.9998492,2008.99998 C91.7489936,2008.99998 89.9166645,2007.20598 89.9166645,2004.99998 M103.955674,2016.63598 C103.213556,2013.27698 100.892265,2010.79798 97.837022,2009.67298 C99.4560048,2008.39598 100.400241,2006.33098 100.053171,2004.06998 C99.6509769,2001.44698 97.4235996,1999.34798 94.7348224,1999.04198 C91.0232075,1998.61898 87.8750721,2001.44898 87.8750721,2004.99998 C87.8750721,2006.88998 88.7692896,2008.57398 90.1636971,2009.67298 C87.1074334,2010.79798 84.7871636,2013.27698 84.044024,2016.63598 C83.7745338,2017.85698 84.7789973,2018.99998 86.0539717,2018.99998 L101.945727,2018.99998 C103.221722,2018.99998 104.226185,2017.85698 103.955674,2016.63598" id="profile_round-[#1342]"> </path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+
+                            <!-- Dropdown -->
+                            <div id="dropdownContent" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-md z-50">
+                                <p class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                                    <a href="index.php?controller=user&action=profile">Thông tin người dùng</a>
+                                </p>
+                                <p class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100 cursor-pointer">
+                                    <a href="index.php?controller=user&action=logout">Đăng xuất</a>
+                                </p>
+                            </div>
+                        </div>
+                    <?php } else { ?>
+                        <a href="index.php?controller=user&action=login" class="text-mainColor font-bold text-lg cursor-pointer">Login</a>
+                        <a href="" class="text-lg">Register</a>
+                    <?php } ?>
                 </div>
             </div>
 
             <div class="menu flex items-center gap-5 justify-center text-xl list-none mt-5">
                 <li class="hover:text-mainColor transition-all">
-                    <a href="" class="flex items-center">
+                    <a href="index.php?controller=home&action=index" class="flex items-center">
                         Home
-                        <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                             <g id="SVGRepo_iconCarrier">
@@ -120,9 +176,9 @@ $base_url = $config['app']['base_url'];
                     </a>
                 </li>
                 <li class="hover:text-mainColor transition-all">
-                    <a href="" class="flex items-center">
+                    <a href="index.php?controller=product&action=index" class="flex items-center">
                         Shop
-                        <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                             <g id="SVGRepo_iconCarrier">
@@ -133,9 +189,9 @@ $base_url = $config['app']['base_url'];
                     </a>
                 </li>
                 <li class="hover:text-mainColor transition-all">
-                    <a href="" class="flex items-center">
+                    <a href="index.php?controller=post&action=index" class="flex items-center">
                         Blog
-                        <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                             <g id="SVGRepo_iconCarrier">
@@ -145,18 +201,23 @@ $base_url = $config['app']['base_url'];
                         </svg>
                     </a>
                 </li>
-                <li class="hover:text-mainColor transition-all">
-                    <a href="" class="flex items-center">
+                <li class="relative group hover:text-mainColor transition-all">
+                    <div class="flex items-center cursor-pointer">
                         Pages
-                        <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path d="M7 10L12 15L17 10" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                </path>
-                            </g>
+                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 10L12 15L17 10" stroke="#000000" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                    </a>
+                    </div>
+
+                    <!-- Menu con -->
+                    <ul
+                        class="absolute top-full -left-3 mt-2 bg-white shadow-md rounded-lg w-40 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-40 text-sm text-gray-500">
+                        <li><a href="index.php?controller=page&action=about" class="block px-4 py-2 hover:bg-gray-100 hover:text-mainColor duration-300 transition-all">ABOUT US</a></li>
+                        <li><a href="index.php?controller=page&action=contact" class="block px-4 py-2 hover:bg-gray-100 hover:text-mainColor duration-300 transition-all">CONTACT US</a></li>
+                    </ul>
                 </li>
+
             </div>
         </div>

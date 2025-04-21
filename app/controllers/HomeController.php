@@ -69,9 +69,10 @@ class HomeController
         $trendingProducts = $product->getTrendingProducts($mostSoldProductsString);
 
         // Deal of this week
-        $timeMinus7Days = $getTime->getTimeByDays($days = '- 90 days');
+        $timeMinus7Days = $getTime->getTimeByDays($days = '- 12 days');
         $soldProductThisWeek = $product->getProductsSold($currentTime, $timeMinus7Days);
         $productThisWeek = [];
+
         foreach ($soldProductThisWeek as $soldItem) {
             $product_id = $soldItem['product_id'];
             if (!isset($productThisWeek[$product_id])) {
@@ -142,5 +143,62 @@ class HomeController
         $dealOfWeek = $this->product->getDealOfWeek($mostProductsThisWeekString);
 
         include __DIR__ . "/../views/components/deal-week.php";
+    }
+
+    public function newArrivals()
+    {
+
+        $timeMinus3Days = $this->getTime->getTimeByDays($days = '- 3 days');
+        // Final Result New Product for New Arrivals
+        $timeMinus3Days = $this->getTime->getTimeByDays($days = '- 3 days');
+        $newProduct = $this->product->getNewProduct($timeMinus3Days, $this->getTime->getCurrentTime());
+
+        $listPost = $this->post->getListPost();
+        // print_r($listPost);
+
+        include __DIR__ . "/../views/components/new-arrivals.php";
+    }
+
+    public function trendingBooks()
+    {
+
+
+        // Get Current Time And Get Time 14 Days Before
+        $timeMinus14Days = $this->getTime->getTimeByDays($days = '- 120 days');
+
+        // Get Sold Products 14 Days Lasted
+        $soldProduct = $this->product->getProductsSold($this->getTime->getcurrentTime(), $timeMinus14Days);
+        $productSales = [];
+        foreach ($soldProduct as $soldItem) {
+            $product_id = $soldItem['product_id'];
+            if (!isset($productSales[$product_id])) {
+                $productSales[$product_id] = 0;
+            }
+            $productSales[$product_id] += $soldItem['sold'];
+        }
+        // Sap xep san pham theo tong so luong ban ra tu lon den be
+        arsort($productSales);
+        //Lay nhung san pham co so luong mua nhieu nhat (Get Products have most count)
+        $mostSoldProducts = [];
+        $maxSold = max($productSales);
+        $minSold = min($productSales);
+        foreach ($productSales as $product_id => $totalSold) {
+            if ($minSold < $totalSold && $totalSold <= $maxSold) {
+                $mostSoldProducts[] = $product_id;
+            }
+        }
+        $mostSoldProductsString = implode(',', $mostSoldProducts);
+
+        // Final Result 
+        $trendingProducts = $this->product->getTrendingProducts($mostSoldProductsString);
+
+        include __DIR__ . "/../views/components/trending-books.php";
+    }
+
+    public function latestBlogs()
+    {
+        $listPost = $this->post->getListPost();
+
+        include __DIR__ . "/../views/components/latest-blog.php";
     }
 }

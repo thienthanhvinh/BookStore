@@ -3,6 +3,9 @@
 namespace App\Controllers;
 
 use App\Helpers\EmailHelper;
+use Google\Client;
+use Google\Service\BeyondCorp;
+use Google\Service\Oauth2;
 
 require __DIR__ . "/../models/User.php";
 
@@ -23,8 +26,10 @@ class UserController
             $email = $this->checkEmailAjax(false);
             $password = $this->checkPasswordAjax(false);
 
-            if (!empty($firstName && $lastName && $email && $password)) {
-                userRegister($firstName, $lastName, $email, $password);
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            if (!empty($firstName && $lastName && $email && $hashedPassword)) {
+                userRegister($firstName, $lastName, $email, $hashedPassword);
                 $message['successfully'] = "Register sucessfully";
             } else {
                 $message['error'] = "Something went wrong";
@@ -138,21 +143,110 @@ class UserController
         if (isset($_POST['loginButton'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-
-            $checkLogin = userLogin($email, $password);
-            if ($checkLogin > 0) {
-                $_SESSION['email'] = $email;
-                $_SESSION['is_login'] = true;
-                $message['successfully'] = "Login Successfully";
-                header('Location:index.php?controller=user&action=forgot');
-            } else {
-                $message['error'] = "Email or Password not exists";
+            $passwordArray = getPassword();
+            // print_r($passwordArray);
+            foreach ($passwordArray as $passwordHash) {
+                if (password_verify($password, $passwordHash)) {
+                    $checkLogin = userLogin($email, $passwordHash);
+                    if ($checkLogin > 0) {
+                        $_SESSION['email'] = $email;
+                        $_SESSION['is_login'] = true;
+                        $message['successfully'] = "Login Successfully";
+                        header('Location:index.php?controller=home&action=index');
+                    } else {
+                        $message['error'] = "Email or Password not exists";
+                    }
+                }
             }
+
+            // if (password_verify($password, $passwordHash)) {
+            //     $checkLogin = userLogin($email, $passwordHash);
+            //     if ($checkLogin > 0) {
+            //         $_SESSION['email'] = $email;
+            //         $_SESSION['is_login'] = true;
+            //         $message['successfully'] = "Login Successfully";
+            //         header('Location:index.php?controller=home&action=index');
+            //     }
+            //     $message['error'] = "Email or Password not exists";
+            // }
+            // if(password_verify($password,))
+            // $checkLogin = userLogin($email, $password);
+            // if ($checkLogin > 0) {
+            //     $_SESSION['email'] = $email;
+            //     $_SESSION['is_login'] = true;
+            //     $message['successfully'] = "Login Successfully";
+            //     header('Location:index.php?controller=home&action=index');
+            // } else {
+            //     $message['error'] = "Email or Password not exists";
+            // }
         }
 
 
         include __DIR__ . '/../views/users/login.php';
     }
+
+    public function loginGoogle()
+    {
+        $client = new Client();
+        $client->setClientId('493035413905-vgi7blctd513fg3qg1rgv9r1v5vtrs3g.apps.googleusercontent.com'); // Thay bằng Client ID của bạn
+        $client->setClientSecret('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'); // Thay bằng Client Secret của bạn
+        $client->setRedirectUri('http://localhost/BookStore/public/index.php?controller=user&action=loginGoogle');
+
+        if (isset($_GET['code'])) {
+            // Lấy access token từ Google
+            $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+            $client->setAccessToken($token);
+
+            // Lấy thông tin người dùng
+            $oauth = new Oauth2($client);
+            $userInfo = $oauth->userinfo->get();
+            // $json = json_encode($userInfo);
+            // var_dump($json);
+
+            // // Debug hoặc xử lý thông tin người dùng
+            // echo 'User ID: ' . $userInfo->id . '<br>';
+            // echo 'Name: ' . $userInfo->name . '<br>';
+            // echo 'Email: ' . $userInfo->email . '<br>';
+
+            // $emailArray = getEmail();
+
+            // foreach ($emailArray as $item) {
+            //     if ($item['email'] === $userInfo->email) {
+            //         $emailExists = true;
+            //         break;
+            //     }
+            // }
+            // if ($emailExists) {
+            //     $_SESSION['email'] = $userInfo->email;
+            //     $_SESSION['is_login'] = true;
+            //     header('Location:index.php?controller=home&action=index');
+            // } else {
+            //     userRegister($userInfo->givenName, $userInfo->familyName, $userInfo->email, null);
+            //     $_SESSION['email'] = $userInfo->email;
+            //     $_SESSION['is_login'] = true;
+            //     header('Location:index.php?controller=home&action=index');
+            // }
+
+            if (!isEmailExists($userInfo->email)) {
+                userRegister($userInfo->givenName, $userInfo->familyName, $userInfo->email, null);
+                $_SESSION['email'] = $userInfo->email;
+                $_SESSION['is_login'] = true;
+                header('Location:index.php?controller=home&action=index');
+            }
+            $_SESSION['email'] = $userInfo->email;
+            $_SESSION['is_login'] = true;
+            header('Location:index.php?controller=home&action=index');
+        }
+    }
+
+    public function logoutUser()
+    {
+        unset($_SESSION['email']);
+        unset($_SESSION['is_login']);
+        session_destroy();
+        header('Location:index.php?controller=home&action=index');
+    }
+
 
     public function forgotPassword()
     {
@@ -199,5 +293,18 @@ class UserController
         echo $id;
 
         include __DIR__ . '/../views/users/register.php';
+    }
+
+    public function profile()
+    {
+        $email =  $_SESSION['email'];
+        $userProfile = getUserProfile($email);
+
+        include __DIR__ . "/../views/users/profile.php";
+    }
+
+    public function changePassword()
+    {
+        include __DIR__ . "/../views/users/change.php";
     }
 }

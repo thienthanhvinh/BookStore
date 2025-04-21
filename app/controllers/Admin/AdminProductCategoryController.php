@@ -15,5 +15,9 @@ class AdminProductCategoryController {
         include __DIR__ . "/../../views/admin/products/listCategory.php";
     }
 
+    public function create() {
+        include "../../views/admin/products/create.php";
+    }
+
 }
 

@@ -7,11 +7,18 @@ use App\Models\Product;
 
 class Cart extends BaseModel
 {
-    
+    public $productModel;
+
+    public function __construct($conn)
+    {
+        parent::__construct($conn); 
+        $this->productModel = new Product($this->conn);
+    }
+
     public function addCart($productId)
     {
-        $product = new Product($this->conn);
-        $inforProduct = $product->getDetailProductById($productId);
+        // $product = new Product($this->conn);
+        $inforProduct = $this->productModel->getDetailProductById($productId);
         // print_r($inforProduct);
 
         $quantity = 1;

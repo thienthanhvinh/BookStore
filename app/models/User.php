@@ -5,10 +5,10 @@ global $conn;
 $conn = connectDatabase();
 
 
-function userRegister($firstName, $lastName, $email, $password)
+function userRegister($firstName, $lastName, $email, $password = null)
 {
     global $conn;
-    $sql = "INSERT INTO users (first_name, last_name, email, password, address, phone, gender, role, created_at, updated_at, reset_token) VALUES ('$firstName', '$lastName', '$email', '$password', '', '', '', '', '', '', '')";
+    $sql = "INSERT INTO users (first_name, last_name, email, password, address, phone, gender, role, created_at, updated_at, reset_token) VALUES ('$firstName', '$lastName', '$email', '$password', '', '', 'male', '', '2025-04-18', '2025-04-18', '')";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         return $result;
@@ -18,10 +18,10 @@ function userRegister($firstName, $lastName, $email, $password)
     }
 }
 
-function userLogin($email, $password)
+function userLogin($email, $passwordHash)
 {
     global $conn;
-    $sql = "SELECT email, password FROM users WHERE email = '$email' AND password = '$password'";
+    $sql = "SELECT email, password FROM users WHERE email = '$email' AND password = '$passwordHash'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         $lengthUser = mysqli_num_rows($result);
@@ -63,3 +63,88 @@ function findEmailUser($email)
         echo "Error: " . mysqli_error($conn);
     }
 }
+
+function getUserProfile($email)
+{
+    global $conn;
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $userProfile = mysqli_fetch_assoc($result);
+        return $userProfile;
+    } else {
+        echo "Error: " . mysqli_error($conn);
+        echo "Not Found Any User Profile";
+    }
+}
+
+function getPassword()
+{
+    global $conn;
+    $sql = "SELECT password FROM users";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $passwordArray = [];
+        while ($row = mysqli_fetch_assoc(($result))) {
+            $passwordArray[] = $row['password'];
+        }
+        return $passwordArray;
+    } else {
+        echo "Error: " . mysqli_error($conn);
+        echo "Password Array Empty";
+    }
+}
+
+function getEmail()
+{
+    global $conn;
+    $sql = "SELECT email FROM users";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $emailArray = [];
+        while ($row = mysqli_fetch_assoc(($result))) {
+            $emailArray[] = $row;
+        }
+        return $emailArray;
+    } else {
+        echo "Error: " . mysqli_error($conn);
+        echo "Email Array Empty";
+    }
+}
+
+function isEmailExists($email)
+{
+    global $conn;
+    $email = mysqli_real_escape_string($conn, $email); // để tránh lỗi SQL injection
+
+    $sql = "SELECT EXISTS(SELECT 1 FROM users WHERE email = ?) AS email_exists";
+    $stmt = mysqli_prepare($conn, $sql);
+    if (!$stmt) {
+        echo "Lỗi prepare: " . mysqli_error($conn);
+        return false;
+    }
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result && $row = mysqli_fetch_assoc($result)) {
+        return (bool)$row['email_exists']; // Trả về true hoặc false
+    }
+
+    return false;
+}
+
+// function isEmailExists($email)
+// {
+//     global $conn;
+//     $email = mysqli_real_escape_string($conn, $email); // để tránh lỗi SQL injection
+
+//     $sql = "SELECT EXISTS(SELECT 1 FROM users WHERE email = '$email') AS email_exists";
+//     $result = mysqli_query($conn, $sql);
+
+//     if ($row = mysqli_fetch_assoc($result)) {
+//         return (bool)$row['email_exists'];
+//     }
+
+//     return false;
+// }

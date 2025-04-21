@@ -86,7 +86,7 @@ class Product extends BaseModel
         }
     }
 
-    public function getDetailProductById($id)
+    public function getDetailProductById($id = 10)
     {
         $sql = "SELECT * FROM products WHERE product_id = '{$id}'";
         $result = mysqli_query($this->conn, $sql);

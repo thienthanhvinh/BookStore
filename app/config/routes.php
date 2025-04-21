@@ -2,17 +2,24 @@
 return [
     'user' => [
         'login' => 'loginUser',
+        'logout' => 'logoutUser',
         'register' => 'registerUser',
         'forgot' => 'forgotPassword',
+        'changePassword' => 'changePassword',
         'checkEmailAjax' => 'checkEmailAjax',
         'checkFirstNameAjax' => 'checkFirstNameAjax',
         'checkLastNameAjax' => 'checkLastNameAjax',
         'checkPasswordAjax' => 'checkPasswordAjax',
-        'checkAjax' => 'checkAjax'
+        'checkAjax' => 'checkAjax',
+        'profile' => 'profile',
+        'loginGoogle' => 'loginGoogle',
     ],
     'home' => [
         'index' => 'index',
-        'dealWeek' => 'dealWeek'
+        'dealWeek' => 'dealWeek',
+        'newArrivals' => 'newArrivals',
+        'trendingBooks' => 'trendingBooks',
+        'latestBlogs' => 'latestBlogs'
     ],
     'product' => [
         'detail' => 'detail',
