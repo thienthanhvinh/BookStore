@@ -17,8 +17,9 @@
             <p class="text-gray-500 text-lg"><?php echo $detailProduct['product_detail'] ?></p>
             <div class="quantity w-[140px] h-[55px] px-3 py-1 rounded-3xl bg-gray-100 flex items-center justify-center gap-3">
                 <button id="decrease" type="button" class="text-[50px]">-</button>
-                <input type="text" class="quantityInput bg-gray-100 w-[40%] text-center outline-none text-2xl" value="1">
+                <input type="text" id="quantityProduct" class="quantityInput bg-gray-100 w-[40%] text-center outline-none text-2xl" value="1">
                 <button id="increase" type="button" class="text-3xl">+</button>
+
             </div>
 
             <script>
@@ -50,17 +51,14 @@
                     }
                     updateInput();
                 });
-
-                
-
             </script>
 
             <div class="flex gap-3 items-center">
                 <a class="text-lg bg-mainColor px-6 py-2 text-white rounded-3xl" href="">Buy Now</a>
 
-                <form action="POST" class="form-submit">
+                <form method="POST" class="form-submit">
                     <input type="hidden" class="product_id" value="<?php echo $detailProduct['product_id'] ?>">
-                    <button type="submit" class="add-cart">Them gio hang</button>
+                    <button type="submit" class="add-cart">Thêm giỏ hàng</button>
                 </form>
 
 

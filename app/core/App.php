@@ -7,8 +7,6 @@ class App
     public function handleRequest()
     {
         $routes = include(__DIR__ . '/../config/routes.php');
-
-
         $controllerName = $_GET['controller'] ?? 'user';
         $actionName = $_GET['action'] ?? 'register';
 

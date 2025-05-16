@@ -18,7 +18,10 @@
             'pass' => getenv('DB_PASS')
         ],
         'app' => [
-            'base_url' => getenv('BASE_URL')
+            'base_url' => getenv('BASE_URL'),
+            'google_client_id' => getenv('GOOGLE_CLIENT_ID'),
+            'google_client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
+            'google_redirect_uri' => getenv('GOOGLE_REDIRECT_URI'),
         ],
     ];
 

@@ -213,6 +213,14 @@ $inputArray = [
                         <input type="radio" class="w-5 h-5" name="creditCard" id="cardPayment">
                         <label for="qrPayment" class="cursor-pointer">(Thanh Vinh) 4123458785262</label>
                     </div>
+                    
+                    <form action="index.php?controller=cart&action=paymentMoMo" method="POST">
+                        <input type="hidden" name="amount" value="50000"> <!-- Giá trị đơn hàng -->
+                        <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-gray-500 px-4 py-2 rounded">
+                            Thanh toán MoMo
+                        </button>
+                    </form>
+
                 </div>
 
 

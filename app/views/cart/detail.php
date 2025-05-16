@@ -1,9 +1,6 @@
 <?php
 include __DIR__ . "/../../views/shared/header.php";
 
-echo "<pre>";
-    print_r($_SESSION['cart']['buy']);
-echo "<pre>";
 
 ?>
 
@@ -54,7 +51,7 @@ echo "<pre>";
                         <td>
                             <div class="flex gap-4 items-center quantity-control" data-id="<?php echo $product['product_id'] ?>">
                                 <button class="text-[55px] font-extralight text-gray-600 decrease-quantity">-</button>
-                                <input type="text" class="w-[40px] text-center border-none outline-none text-[20px] bg-gray-300 rounded-[60px] quantityInput" value="1">
+                                <input type="text" class="w-[40px] text-center border-none outline-none text-[20px] bg-gray-300 rounded-[60px] quantityInput" value="<?php echo $product['quantity'] ?>">
                                 <button class="text-[28px] font-light text-gray-600 increase-quantity">+</button>
                             </div>
                         </td>
@@ -91,7 +88,7 @@ echo "<pre>";
         </div>
         <div class="flex gap-10">
             <p class="text-xl font-semibold">TOTAL</p>
-            <p class="text-xl font-semibold">$180.00</p>
+            <p class="text-xl font-semibold"><?php echo $totalPrice; ?></p>
         </div>
         <div class="">
             <a class="px-6 py-3 bg-mainColor text-white rounded-3xl tracking-wide" href="">Proceed to Checkout</a>

@@ -13,6 +13,7 @@ return [
         'checkAjax' => 'checkAjax',
         'profile' => 'profile',
         'loginGoogle' => 'loginGoogle',
+        'handleGoogleCallback' => 'handleGoogleCallback',
     ],
     'home' => [
         'index' => 'index',
@@ -29,7 +30,11 @@ return [
     'cart' => [
         'add' => 'addToCart',
         'detail' => 'detail',
-        'payment' => 'payment'
+        'payment' => 'payment',
+        'paymentSuccess' => 'paymentSuccess',
+        'paymentMoMo' => 'paymentMoMo',
+        'notify' => 'notify',
+        'callback' => 'callback'
     ],
     'post' => [
         'index' => 'index',

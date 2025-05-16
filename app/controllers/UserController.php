@@ -7,6 +7,7 @@ use Google\Client;
 use Google\Service\BeyondCorp;
 use Google\Service\Oauth2;
 
+
 require __DIR__ . "/../models/User.php";
 
 class UserController
@@ -142,43 +143,25 @@ class UserController
         $message = [];
         if (isset($_POST['loginButton'])) {
             $email = $_POST['email'];
+            echo $email;
             $password = $_POST['password'];
+            echo $password;
             $passwordArray = getPassword();
-            // print_r($passwordArray);
+            print_r($passwordArray);
             foreach ($passwordArray as $passwordHash) {
                 if (password_verify($password, $passwordHash)) {
                     $checkLogin = userLogin($email, $passwordHash);
                     if ($checkLogin > 0) {
                         $_SESSION['email'] = $email;
                         $_SESSION['is_login'] = true;
-                        $message['successfully'] = "Login Successfully";
+                        $_SESSION['login_message'] = "Login Successfully";
+                        // $message['successfully'] = "Login Successfully";
                         header('Location:index.php?controller=home&action=index');
                     } else {
                         $message['error'] = "Email or Password not exists";
                     }
                 }
             }
-
-            // if (password_verify($password, $passwordHash)) {
-            //     $checkLogin = userLogin($email, $passwordHash);
-            //     if ($checkLogin > 0) {
-            //         $_SESSION['email'] = $email;
-            //         $_SESSION['is_login'] = true;
-            //         $message['successfully'] = "Login Successfully";
-            //         header('Location:index.php?controller=home&action=index');
-            //     }
-            //     $message['error'] = "Email or Password not exists";
-            // }
-            // if(password_verify($password,))
-            // $checkLogin = userLogin($email, $password);
-            // if ($checkLogin > 0) {
-            //     $_SESSION['email'] = $email;
-            //     $_SESSION['is_login'] = true;
-            //     $message['successfully'] = "Login Successfully";
-            //     header('Location:index.php?controller=home&action=index');
-            // } else {
-            //     $message['error'] = "Email or Password not exists";
-            // }
         }
 
 
@@ -187,10 +170,44 @@ class UserController
 
     public function loginGoogle()
     {
+        $config = require __DIR__ . '/../config/config.php';
+    
+        $clientId = $config['app']['google_client_id'];
+        $clientSecret = $config['app']['google_client_secret'];
+        $redirectUri = $config['app']['google_redirect_uri'];
+
+        // var_dump($redirectUri);
+
+
         $client = new Client();
-        $client->setClientId('493035413905-vgi7blctd513fg3qg1rgv9r1v5vtrs3g.apps.googleusercontent.com'); // Thay bằng Client ID của bạn
-        $client->setClientSecret('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'); // Thay bằng Client Secret của bạn
-        $client->setRedirectUri('http://localhost/BookStore/public/index.php?controller=user&action=loginGoogle');
+
+        $client->setClientId($clientId);
+        $client->setClientSecret($clientSecret); 
+        $client->setRedirectUri($redirectUri);
+        $client->addScope('email');
+        $client->addScope('profile');
+
+        header("Location: " . $client->createAuthUrl());
+        exit;
+    }
+
+    public function handleGoogleCallback() 
+    {
+
+
+        $config = require __DIR__ . '/../config/config.php';
+    
+        $clientId = $config['app']['google_client_id'];
+        $clientSecret = $config['app']['google_client_secret'];
+        $redirectUri = $config['app']['google_redirect_uri'];
+
+
+        $client = new Client();
+        
+
+        $client->setClientId($clientId); 
+        $client->setClientSecret($clientSecret); 
+        $client->setRedirectUri($redirectUri);
 
         if (isset($_GET['code'])) {
             // Lấy access token từ Google
@@ -200,6 +217,7 @@ class UserController
             // Lấy thông tin người dùng
             $oauth = new Oauth2($client);
             $userInfo = $oauth->userinfo->get();
+            print_r($userInfo);
             // $json = json_encode($userInfo);
             // var_dump($json);
 
@@ -237,6 +255,7 @@ class UserController
             $_SESSION['is_login'] = true;
             header('Location:index.php?controller=home&action=index');
         }
+
     }
 
     public function logoutUser()

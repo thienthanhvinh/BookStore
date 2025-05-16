@@ -99,24 +99,6 @@ $base_url = $config['app']['base_url'];
                         </svg>
                     </a>
 
-
-                    <script>
-                        function toggleDropdown() {
-                            const dropdown = document.getElementById("dropdownContent");
-                            dropdown.classList.toggle("hidden");
-                        }
-
-                        // Đóng dropdown khi click ra ngoài
-                        document.addEventListener("click", function(e) {
-                            const dropdown = document.getElementById("dropdownContent");
-                            const trigger = e.target.closest("button");
-
-                            if (!trigger && !e.target.closest("#dropdownContent")) {
-                                dropdown.classList.add("hidden");
-                            }
-                        });
-                    </script>
-
                     <?php if (isset($_SESSION['email'])) { ?>
                         <div class="hidden">
                             <a href="index.php?controller=user&action=login" class="text-mainColor font-bold text-lg cursor-pointer">Login</a>
@@ -221,3 +203,6 @@ $base_url = $config['app']['base_url'];
 
             </div>
         </div>
+
+
+        

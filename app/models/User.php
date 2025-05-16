@@ -5,10 +5,10 @@ global $conn;
 $conn = connectDatabase();
 
 
-function userRegister($firstName, $lastName, $email, $password = null)
+function userRegister($googleId, $firstName, $lastName, $email, $password = null)
 {
     global $conn;
-    $sql = "INSERT INTO users (first_name, last_name, email, password, address, phone, gender, role, created_at, updated_at, reset_token) VALUES ('$firstName', '$lastName', '$email', '$password', '', '', 'male', '', '2025-04-18', '2025-04-18', '')";
+    $sql = "INSERT INTO users (google_id, first_name, last_name, email, password, address, phone, gender, role, created_at, updated_at, reset_token) VALUES ($googleId, '$firstName', '$lastName', '$email', '$password', '', '', 'male', '', '2025-04-18', '2025-04-18', '')";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         return $result;

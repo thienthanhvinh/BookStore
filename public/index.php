@@ -1,4 +1,5 @@
 <?php
+
 use App\Core\App;
 
 session_start();
@@ -8,16 +9,6 @@ session_start();
 require_once '../vendor/autoload.php';
 require_once '../app/config/database.php';
 
-
-// handleRequest();
-// new App();
-
 $app = new App();
 $app->handleRequest();
-
-
-
-
-
-
 ?>

@@ -50,13 +50,7 @@ class ProductController
 
             $response = ["status" => "success", "message" => "HTML saved successfully", 'data' => $htmlContent];
 
-            // if ($isAjax) {
-            //     echo json_encode($response);
-            //     exit;
-            // }
-
             if ($isAjax) {
-                // header('Content-Type: application/json');
                 echo json_encode($response);
                 exit;
             } else {
@@ -76,20 +70,6 @@ class ProductController
         include __DIR__ . "/../views/products/detail.php";
     }
 
-    public function addToCart($product_id = null)
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $product_id = $_POST['product_id'] ?? null;
-            if ($product_id) {
-                $cart = new Cart($this->conn);
-                $cart->addCart($product_id);
-            } else {
-                echo "Không nhận được product_id!";
-            }
-        } else {
-            echo "Phương thức không phải POST!";
-        }
-    }
 
 
     public function search()
