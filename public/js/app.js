@@ -3,6 +3,41 @@ function toggleDropdown() {
   dropdown.classList.toggle("hidden");
 }
 
+// Đóng modal thêm giỏ hàng thành công
+function closeModal() {
+    console.log("clicked");
+    $('#successModal').addClass('hidden');
+  }
+
+// Gọi api checkout
+function handleCheckout() {
+  fetch('index.php?controller=cart&action=checkout'), {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      productName: product_name,
+      price: price,
+      quantity: quantity,
+      totalPrice: total_price
+    })
+    .then(response => {
+      if(response.status = 200) {
+        console.log(response.json());
+      }
+      throw new Error("Lỗi khi thực hiện checkout");
+    })
+    .then(data => {
+      window.location.url = data.url;
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("Đã có lỗi xảy ra khi thực hiện checkout");
+    })
+  }
+}
+
 // Đóng dropdown khi click ra ngoài
 document.addEventListener("click", function (e) {
   const dropdown = document.getElementById("dropdownContent");
@@ -141,10 +176,12 @@ $(document).ready(function () {
       dataType: "text",
       success: function (response) {
         console.log("Response:", response);
+        $('#successModal').removeClass('hidden');
       },
       error: function (xhr, ajaxOptions, thrownError) {
         console.log("Lỗi:", xhr.status, thrownError);
       },
     });
   });
+  
 });

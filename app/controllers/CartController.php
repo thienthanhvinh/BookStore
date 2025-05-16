@@ -3,6 +3,8 @@
 
 namespace App\Controllers;
 
+namespace App\Exception;
+
 use App\Models\Cart;
 // require __DIR__ . "/../models/Cart.php";
 
@@ -48,6 +50,51 @@ class CartController
         include __DIR__ . "/../views/cart/detail.php";
     }
 
+    public function checkout()
+    {
+        header('Content-Type: application/json');
+
+        // Đọc dữ liệu từ body của request
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        // Kiểm tra dữ liệu đầu vào
+        if (!isset($data['productName']) || !isset($data['quantity']) || !isset($data['price']) || !isset($data['totalPrice'])) {
+            http_response_code(400);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Dữ liệu không hợp lệ. Vui lòng cung cấp productId và quantity hợp lệ.'
+            ]);
+            exit;
+        }
+
+        try {
+    // Lấy dữ liệu
+    $productId = $data['productId'];
+    $quantity = $data['quantity'];
+    $productName = $data['productName'];
+    $totalPrice = $data['totalPrice'];
+
+
+    // Trả về phản hồi thành công
+    http_response_code(200);
+    echo json_encode([
+        'success' => true,
+        'message' => 'Thêm sản phẩm vào giỏ hàng thành công!',
+        'url' => 'index.php?controller=cart&action=payment', 
+    ]);
+} catch (\Exception $e) {
+    // Xử lý lỗi
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Lỗi server. Vui lòng thử lại sau.',
+        'error' => $e->getMessage()
+    ]);
+}
+
+    }
+
 
     public function payment()
     {
@@ -64,59 +111,6 @@ class CartController
         } else {
             echo "Không thể tạo yêu cầu thanh toán.";
         }
-    }
-
-    public function paymentSuccess()
-    {
-
-        // $config = require __DIR__ . '/../config/momo_config.php';
-
-        // // Nhận dữ liệu từ MoMo gửi về qua webhook
-        // if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        //     $data = json_decode(file_get_contents('php://input'), true);
-        //     var_dump($data);
-        // } else {
-        //     $data = $_GET;
-        // }
-
-        // // Kiểm tra chữ ký để đảm bảo dữ liệu từ MoMo là hợp lệ
-        // $rawHash = "accessKey=" . $config['accessKey'] .
-        //     "&amount=" . $data['amount'] .
-        //     "&extraData=" . $data['extraData'] .
-        //     "&message=" . $data['message'] .
-        //     "&orderId=" . $data['orderId'] .
-        //     "&orderInfo=" . $data['orderInfo'] .
-        //     "&orderType=" . $data['orderType'] .
-        //     "&partnerCode=" . $data['partnerCode'] .
-        //     "&payType=" . $data['payType'] .
-        //     "&requestId=" . $data['requestId'] .
-        //     "&responseTime=" . $data['responseTime'] .
-        //     "&resultCode=" . 0 .
-        //     "&transId=" . $data['transId'];
-
-        // $signature = hash_hmac("sha256", $rawHash, $config['secretKey']);
-
-        // // So sánh chữ ký
-        // if ($signature !== $data['signature']) {
-        //     // Chữ ký không hợp lệ, từ chối xử lý
-        //     http_response_code(401);
-        //     return "Invalid signature";
-        // }
-
-        // // Xử lý trạng thái giao dịch
-        // if ($data['resultCode'] == 0) {
-        //     // Thanh toán thành công, cập nhật trạng thái đơn hàng trong database
-        //     $orderId = $data['orderId'];
-        //     // Ví dụ: Cập nhật trạng thái đơn hàng trong database
-        //     // $this->updateOrderStatus($orderId, 'PAID');
-        //     return "Success";
-        // } else {
-        //     // Thanh toán thất bại, ghi log hoặc xử lý lỗi
-        //     // Ví dụ: $this->logError($orderId, $data['message']);
-        //     return "Failed: " . $data['message'];
-        // }
-
-        // include __DIR__ . "/../views/cart/paymentSuccess.php";
     }
 
     public function notify()

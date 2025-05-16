@@ -91,7 +91,7 @@ include __DIR__ . "/../../views/shared/header.php";
             <p class="text-xl font-semibold"><?php echo $totalPrice; ?></p>
         </div>
         <div class="">
-            <a class="px-6 py-3 bg-mainColor text-white rounded-3xl tracking-wide" href="">Proceed to Checkout</a>
+            <button class="px-6 py-3 bg-mainColor text-white rounded-3xl tracking-wide" onclick="handleCheckout()">Proceed to Checkout</button>
         </div>
     </div>
 </div>
